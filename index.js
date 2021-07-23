@@ -59,28 +59,30 @@ function embedOlustur(
 // ************************************** //
 // Müzik botu
 client.on('message', async msg => {
-  if (msg.content.startsWith(prefix + '.m')) {
+  const ytdl = require('ytdl-core');
+  if (msg.content.startsWith(prefix + 'çal')) {
     const args = msg.content.split(' ').slice(1);
     const sarkiURL = args.join(' ');
+    if (!msg.member.voice.channel) return msg.reply('Sesli kanalda değilsin.');
     if (!sarkiURL.includes('https://'))
       return msg.reply('Lütfen doğru URL adresi yazın.');
     if (!sarkiURL) return msg.reply('Şarkı linkini de yazmalısın.');
-    if (!msg.member.voice.channel) return msg.reply('Sesli kanalda değilsin.');
     const connection = await msg.member.voice.channel.join();
-    const ytdl = require('ytdl-core');
+    connection.play(ytdl(sarkiURL, { filter: 'audioonly' }));
+    /* embed
     ytdl(sarkiURL).on('info', info => {
       const embed = new Discord.MessageEmbed()
         .setColor('RANDOM')
         .setTitle(info.title);
       msg.reply(embed);
     });
-    connection.play(ytdl(sarkiURL, { filter: 'audioonly' }));
+    */
   }
 });
 // ************************************** //
 // Tepkiler ile oylama komutu.
 client.on('message', msg => {
-  if (msg.content.startsWith(prefix + 'oylama')) {
+  if (msg.content.toLowerCase().startsWith(prefix + 'oylama')) {
     const args = msg.content.split(' ').slice(1);
     const oylamaMesaji = args.join(' ');
     if (!msg.member.hasPermission('ADMINISTRATOR'))
@@ -88,10 +90,11 @@ client.on('message', msg => {
     if (!oylamaMesaji) return msg.reply('Oylamanın ne olacağını yazmalısın.');
     msg.delete(msg.author);
     const embed = new Discord.MessageEmbed()
-      .setTitle('Oylama')
+      .setTitle('Yeni bir Oylama')
+      .setColor('YELLOW')
       .setDescription(oylamaMesaji)
       .setFooter('Müslüm Bot', 'https://i.hizliresim.com/jimb7el.jpg');
-    msg.channel.send(embed).then(embedMessage => {
+    msg.reply(embed).then(embedMessage => {
       embedMessage.react('✔️');
       embedMessage.react('⭕');
     });
