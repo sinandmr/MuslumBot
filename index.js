@@ -142,7 +142,7 @@ client.on('message', msg => {
           },
           {
             name: ':pencil: Yayınlanan Kanal ',
-            value: `\n ${duyuruKanali}`,
+            value: duyuruKanali,
             inline: true,
           },
           {
@@ -152,7 +152,7 @@ client.on('message', msg => {
           }
         )
         .setFooter(
-          msg.member.user.tag,
+          msg.member.user.tag + ' tarafından duyuru yapıldı.',
           'https://cdn.discordapp.com/avatars/' +
             msg.author.id +
             '/' +
@@ -163,7 +163,10 @@ client.on('message', msg => {
     duyuruKanali.send(
       new Discord.MessageEmbed()
         .setColor('#00ceff')
+        .setTitle(':scroll: Duyuru Mesajı')
         .setDescription(duyuruMesaji)
+        //.addField(':scroll: Duyuru Mesajı', duyuruMesaji)
+        .setFooter(client.user.username, client.user.displayAvatarURL())
     );
   }
 });
