@@ -90,10 +90,8 @@ client.on('message', msg => {
     if (!oylamaMesaji) return msg.reply('Oylamanın ne olacağını yazmalısın.');
     msg.delete(msg.author);
     const embed = new Discord.MessageEmbed()
-      .setTitle('Yeni bir Oylama')
-      .setColor('YELLOW')
-      .setDescription(oylamaMesaji)
-      .setFooter('Müslüm Bot', 'https://i.hizliresim.com/jimb7el.jpg');
+      .setColor('#00ceff')
+      .setDescription(oylamaMesaji);
     msg.reply(embed).then(embedMessage => {
       embedMessage.react('✔️');
       embedMessage.react('⭕');
