@@ -99,6 +99,7 @@ client.on('message', msg => {
   }
 });
 // ************************************** //
+
 // Duyuru komutu
 client.on('message', msg => {
   if (msg.content.startsWith(prefix + 'duyur')) {
@@ -113,8 +114,40 @@ client.on('message', msg => {
       return msg.reply('**Duyurunun ne olacağını yazmalısın.**');
 
     // msg.delete(msg.author);
-    msg.reply(`${duyuruKanali} kanalında "${duyuruMesaji}" duyurusu yapıldı.`);
-    duyuruKanali.send(duyuruMesaji);
+    msg.reply(
+      new Discord.MessageEmbed()
+        .setColor('#00ceff')
+        .addFields(
+          {
+            name: ':bust_in_silhouette: Gönderen Kişi',
+            value: msg.member,
+            inline: true,
+          },
+          {
+            name: ':pencil: Yayınlanan Kanal ',
+            value: `\n ${duyuruKanali}`,
+            inline: true,
+          },
+          {
+            name: ':scroll: Mesaj',
+            value: duyuruMesaji,
+            inline: false,
+          }
+        )
+        .setFooter(
+          msg.member.user.tag,
+          'https://cdn.discordapp.com/avatars/' +
+            msg.author.id +
+            '/' +
+            msg.author.avatar +
+            '.jpeg'
+        )
+    );
+    duyuruKanali.send(
+      new Discord.MessageEmbed()
+        .setColor('#00ceff')
+        .setDescription(duyuruMesaji)
+    );
   }
 });
 // ************************************** //
