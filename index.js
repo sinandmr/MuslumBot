@@ -102,7 +102,7 @@ client.on('message', msg => {
         }
       )
       .setFooter(
-        msg.member.user.tag + 'Tarafından oylamaya sunuldu.',
+        msg.member.user.tag + ' tarafından oylamaya sunuldu.',
         'https://cdn.discordapp.com/avatars/' +
           msg.author.id +
           '/' +
@@ -373,6 +373,7 @@ client.on('message', message => {
 // msg.react() ile mesaja emoji ekler.
 // msg.member.user.tag ile kullanıcının isim ve kodunu alıyoruz.
 // bot pp https://i.hizliresim.com/90nqw7c.jpg
+// .setFooter(client.user.username, client.user.displayAvatarURL()); ile direkt botun bilgilerini alabiliyoruz.
 
 // ************************************** //
 client.login('ODY1Mjc3ODMzODUyMDkyNDM2.YPBqxw.Dh4aSauYCz68u9_d0hKPZ0ow5bM');
