@@ -91,10 +91,27 @@ client.on('message', msg => {
     msg.delete(msg.author);
     const embed = new Discord.MessageEmbed()
       .setColor('#00ceff')
-      .setDescription(oylamaMesaji);
+      .addFields(
+        {
+          name: '🗳️  Oylama Mesajı',
+          value: oylamaMesaji,
+        },
+        {
+          name: '⏱️  Durum',
+          value: 'Lütfen bu talep hakkında düşüncelerinizi oylayarak veriniz.',
+        }
+      )
+      .setFooter(
+        msg.member.user.tag + 'Tarafından oylamaya sunuldu.',
+        'https://cdn.discordapp.com/avatars/' +
+          msg.author.id +
+          '/' +
+          msg.author.avatar +
+          '.jpeg'
+      );
     msg.reply(embed).then(embedMessage => {
-      embedMessage.react('✔️');
-      embedMessage.react('⭕');
+      embedMessage.react('✅');
+      embedMessage.react('❎');
     });
   }
 });
@@ -354,6 +371,8 @@ client.on('message', message => {
 // ************************************** //
 // msg.delete() mesajı siler.
 // msg.react() ile mesaja emoji ekler.
+// msg.member.user.tag ile kullanıcının isim ve kodunu alıyoruz.
+// bot pp https://i.hizliresim.com/90nqw7c.jpg
 
 // ************************************** //
 client.login('ODY1Mjc3ODMzODUyMDkyNDM2.YPBqxw.Dh4aSauYCz68u9_d0hKPZ0ow5bM');
