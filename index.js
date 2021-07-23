@@ -106,30 +106,6 @@ function embedOlustur(
 // KOMUTLAR
 
 // ************************************** //
-// Bot'un pingi
-client.on('message', msg => {
-  if (msg.content.toLowerCase() === prefix + 'ping') {
-    msg.channel.send('**Gecikme süresi hesaplanıyor...**').then(sent => {
-      setTimeout(function () {
-        sent.delete();
-        msg.channel.send(
-          new Discord.MessageEmbed().setColor('#00ff6e').addFields(
-            {
-              name: ':grey_question: Websocket',
-              value: `:satellite: ${client.ws.ping} ms`,
-            },
-            {
-              name: ':grey_question:  Gecikme',
-              value: `:satellite: ${
-                sent.createdTimestamp - msg.createdTimestamp
-              } ms`,
-            }
-          )
-        );
-      }, 1000);
-    });
-  }
-});
 // ************************************** //
 // Müzik botu
 client.on('message', async msg => {
@@ -154,185 +130,14 @@ client.on('message', async msg => {
   }
 });
 // ************************************** //
-// Tepkiler ile oylama komutu.
-/*
-client.on('message', msg => {
-  if (msg.content.toLowerCase().startsWith(prefix + 'oylama')) {
-    const args = msg.content.split(' ').slice(1);
-    const oylamaMesaji = args.join(' ');
-    if (!msg.member.hasPermission('ADMINISTRATOR'))
-      return msg.reply('Oylama yapmak için yetkiniz yok.');
-    if (!oylamaMesaji) return msg.reply('Oylamanın ne olacağını yazmalısın.');
-    msg.delete(msg.author);
-    const embed = new Discord.MessageEmbed()
-      .setColor('#00ceff')
-      .addFields(
-        {
-          name: '🗳️  Oylama Mesajı',
-          value: oylamaMesaji,
-        },
-        {
-          name: '⏱️  Durum',
-          value: 'Lütfen bu talep hakkında düşüncelerinizi oylayarak veriniz.',
-        }
-      )
-      .setFooter(
-        msg.member.user.tag + ' tarafından oylamaya sunuldu.',
-        'https://cdn.discordapp.com/avatars/' +
-          msg.author.id +
-          '/' +
-          msg.author.avatar +
-          '.jpeg'
-      );
-    msg.reply(embed).then(embedMessage => {
-      embedMessage.react('✅');
-      embedMessage.react('❎');
-    });
-  }
-});
-*/
-// ************************************** //
-
-// Duyuru komutu
-client.on('message', msg => {
-  if (msg.content.startsWith(prefix + 'duyur')) {
-    const args = msg.content.split(' ').slice(2);
-    const duyuruKanali = msg.mentions.channels.first();
-    const duyuruMesaji = args.join(' ');
-    if (!msg.member.hasPermission('ADMINISTRATOR'))
-      return msg.reply('**Duyuru yapmak için yetkiniz yok.**');
-    if (!duyuruKanali)
-      return msg.reply('**Duyurunun hangi kanalda yapılacağını yazmalısın.**');
-    if (!duyuruMesaji)
-      return msg.reply('**Duyurunun ne olacağını yazmalısın.**');
-
-    // msg.delete(msg.author);
-    msg.reply(
-      new Discord.MessageEmbed()
-        .setColor('#00ceff')
-        .addFields(
-          {
-            name: ':bust_in_silhouette: Gönderen Kişi',
-            value: msg.member,
-            inline: true,
-          },
-          {
-            name: ':pencil: Yayınlanan Kanal ',
-            value: duyuruKanali,
-            inline: true,
-          },
-          {
-            name: ':scroll: Mesaj',
-            value: duyuruMesaji,
-            inline: false,
-          }
-        )
-        .setFooter(
-          msg.member.user.tag + ' tarafından duyuru yapıldı.',
-          'https://cdn.discordapp.com/avatars/' +
-            msg.author.id +
-            '/' +
-            msg.author.avatar +
-            '.jpeg'
-        )
-    );
-    duyuruKanali.send(
-      new Discord.MessageEmbed()
-        .setColor('#00ceff')
-        .setTitle(':scroll: Duyuru Mesajı')
-        .setDescription(duyuruMesaji)
-        //.addField(':scroll: Duyuru Mesajı', duyuruMesaji)
-        .setFooter(client.user.username, client.user.displayAvatarURL())
-    );
-  }
-});
-// ************************************** //
-// Kişiye özel olarak duyuru atma
-client.on('message', msg => {
-  if (msg.content === 'özelduyuru?') {
-    msg.reply(
-      'Bu komutu şöyle kullanabilirsin. **özelduyuru @kişi akşam discorda gel.**'
-    );
-  }
-  if (msg.content.startsWith(prefix + 'özelduyuru')) {
-    const args = msg.content.split(' ').slice(2);
-    const duyuruKisi = msg.mentions.users.first();
-    const duyuruMesaji = args.join(' ');
-    if (!msg.member.hasPermission('ADMINISTRATOR'))
-      return msg.reply('**Duyuru yapmak için yetkiniz yok.**');
-    if (duyuruKisi === msg.author)
-      return msg.reply('Neden kendine duyuru atıyorsun ki..');
-    if (!duyuruKisi)
-      return msg.reply('**Duyurunun kime yapılacağını yazmalısın.**');
-    if (!duyuruMesaji)
-      return msg.reply('**Duyurunun ne olacağını yazmalısın.**');
-
-    msg.reply(`${duyuruKisi} kişisine "${duyuruMesaji}" duyurusu yapıldı.`);
-    duyuruKisi.send(duyuruMesaji);
-  }
-});
-// ************************************** //
 // Sunucuya katılan kişiye otomatik rol atama
 client.on('guildMemberAdd', member => {
   let rol = member.guild.roles.cache.find(role => role.name === 'Mal');
   member.roles.add(rol);
 });
 // ************************************** //
-// Mesaj ile rol verdirme
-client.on('message', msg => {
-  try {
-    if (msg.content.startsWith(prefix + 'rolver')) {
-      if (!msg.member.hasPermission('ADMINISTRATOR'))
-        return msg.channel.send('Bu komutu kullanamazsın.');
-      const verilecekRol = msg.mentions.roles.first();
-      const verilecekUye = msg.mentions.members.first();
-      if (!verilecekRol) msg.channel.send('Verilecek rolü yazmalısın.');
-      if (!verilecekUye) msg.channel.send('Rolün verileceği üyeyi yazmalısın.');
-      if (verilecekUye && verilecekRol) {
-        verilecekUye.roles.add(verilecekRol);
-        msg.channel.send(
-          `${verilecekUye} kişisine ${verilecekRol} rolü verildi.`
-        );
-      }
-    }
-  } catch (e) {
-    console.log(e);
-  }
-});
 
 // ************************************** //
-client.on('message', msg => {
-  if (msg.content.toLowerCase() === prefix + 'sa') {
-    msg.author.send('as'); // Yazara özel mesaj olarak cevap verir.
-  }
-});
-// ************************************** //
-// Foto Komutu
-client.on('message', msg => {
-  if (msg.content.toLowerCase() === prefix + 'foto') {
-    msg.reply(msg.author.displayAvatarURL());
-  }
-});
-// ************************************** //
-// Embed Mesajı
-client.on('message', msg => {
-  if (msg.content.toLowerCase() === prefix + 'embed') {
-    embedOlustur(
-      msg.channel,
-      'RANDOM',
-      'Sinan Demir',
-      'https://lh3.googleusercontent.com/proxy/ba2BFmSdUHiO136yW-YEdJH3UVYiXgtzqDW6RoWZqXnVV1tlf5_6Z0pktSSFkWtnISng3zPdmU0qOv-5CJOYm-MKfOu-Wkdj-GY',
-      'https://google.com',
-      'Duyuru: Oyun gelişimi',
-      'https://google.com',
-      'Oyunda çok güzel şeyler yapıldı',
-      'https://lh3.googleusercontent.com/proxy/ba2BFmSdUHiO136yW-YEdJH3UVYiXgtzqDW6RoWZqXnVV1tlf5_6Z0pktSSFkWtnISng3zPdmU0qOv-5CJOYm-MKfOu-Wkdj-GY',
-      'Sinan Demir tarafından eklendi.',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcq6FvFhAjogg_q9-nWWekarCHUqk6VwNqyA&usqp=CAU'
-    );
-  }
-});
-
 // ************************************** //
 // Sunucuya katılan ve ayrılanlar için karşılama mesajları
 /*
