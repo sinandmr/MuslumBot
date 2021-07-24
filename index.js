@@ -49,8 +49,10 @@ client.on('message', async msg => {
     const args = msg.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
+    /*
     if (!client.commands.has(command))
       return msg.channel.send(`**${command}** adında bir komut bulunamıyor.`);
+    */
 
     try {
       client.commands.get(command).run(client, msg, args);
