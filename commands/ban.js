@@ -15,9 +15,8 @@ module.exports = {
             const logKanali = msg.guild.channels.cache.find(
               channel => channel.id === '866371235113074739'
             );
-            logKanali.send(`${user.tag} sunucudan banlandı.`);
             logKanali.send(
-              `${user.tag} kullanıcısının sunucuya yeniden katılabilmesi için sunucu ayarlarındaki yasaklar kısmından yasağını kaldırmalısın.`
+              `**${user.tag}** sunucudan banlandı. Kullanıcının sunucuya yeniden katılabilmesi için sunucu ayarlarındaki yasaklar kısmından yasağını kaldırmalısın.`
             );
           })
           .catch(err => {
