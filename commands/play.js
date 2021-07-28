@@ -11,10 +11,12 @@ module.exports = {
       const sarki = await song.play(baglan);
       // Şarkı bitince çıksın.
       sarki.on('finish', () => {
-        msg.channel.send('bitti');
-        const saniye = 30;
+        const saniye = 120;
         setTimeout(() => {
           msg.member.voice.channel.leave();
+          msg.channel.send(
+            '**2 dakika boyunca şarkı açılmadığı için kanaldan çıkıldı.**'
+          );
         }, 1000 * saniye);
       });
 
