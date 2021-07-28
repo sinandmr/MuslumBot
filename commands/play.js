@@ -1,28 +1,43 @@
 const player = require('discordjs-ytdl-advanced');
 const Discord = require('discord.js');
+const prefix = require('../prefix.json').prefix;
 module.exports = {
   kod: 'p',
   async run(client, msg, args) {
     if (!args[0]) return msg.channel.send('Lütfen bir kelime giriniz.');
     if (msg.member.voice.channel) {
       const baglan = await msg.member.voice.channel.join();
-      const sarki = await player(args.join(' '));
-      const song = await sarki.play(baglan);
-      sarki.play(baglan);
+      const song = await player(args.join(' '));
+      const sarki = await song.play(baglan);
+      // Şarkı bitince çıksın.
+      sarki.on('finish', () => {
+        msg.channel.send('bitti');
+        const saniye = 30;
+        setTimeout(() => {
+          msg.member.voice.channel.leave();
+        }, 1000 * saniye);
+      });
+
+      // Dur ve Devam komutları
+      client.on('message', msg2 => {
+        if (msg2.content === prefix + 'dur') return sarki.pause();
+        if (msg2.content === prefix + 'devam') return sarki.resume();
+      });
+
       const embed = new Discord.MessageEmbed()
         .setTitle('Çalan Şarkı')
         .setColor('RED')
-        .setDescription(`:headphones:  [${sarki.title}](${sarki.url})`)
-        .setThumbnail(sarki.thumbnail)
+        .setDescription(`:headphones:  [${song.title}](${song.url})`)
+        .setThumbnail(song.thumbnail)
         .addFields(
           {
             name: 'Şarkı Süresi',
-            value: `:clock3:  ${sarki.time}`,
+            value: `:clock3:  ${song.time}`,
             inline: true,
           },
           {
             name: 'Kanal Adı',
-            value: `:loud_sound:  [${sarki.channel}](${sarki.channelURL})`,
+            value: `:loud_sound:  [${song.channel}](${song.channelURL})`,
             inline: true,
           }
         )
