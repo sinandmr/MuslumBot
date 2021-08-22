@@ -112,5 +112,5 @@ client.on('guildMemberRemove', member => {
 // bot pp https://i.hizliresim.com/90nqw7c.jpg
 // .setFooter(client.user.username, client.user.displayAvatarURL()); ile direkt botun bilgilerini alabiliyoruz.
 // *************************************************************************************************************** //
-client.login('ODY1Mjc3ODMzODUyMDkyNDM2.YPBqxw.Dh4aSauYCz68u9_d0hKPZ0ow5bM');
+client.login('ODY1Mjc3ODMzODUyMDkyNDM2.YPBqxw.JgSsdCyK2hdC29x_I-sOGMMk9Gc');
 // *************************************************************************************************************** //
