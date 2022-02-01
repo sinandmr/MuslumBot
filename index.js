@@ -12,13 +12,11 @@ client.on('ready', () => {
   console.log(`${client.user.tag} Aktif!`);
   const durumlar = [
     'Sevgisizliğine bir kalp verdim..',
-    'Sinan Demir',
-    /*
     'Feleğin cilvesine, hayatın sillesine, dertlerin cümlesine itirazım var..',
     'Her şeyi al, bana beni geri ver..',
     'Kanma sever gibi göründüğüne, seni sevmiyorum diyecek bir gün..',
-    */
   ];
+
   let say = 0;
   setInterval(() => {
     if (say === durumlar.length) say = 0;
