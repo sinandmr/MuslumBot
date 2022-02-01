@@ -12,9 +12,12 @@ client.on('ready', () => {
   console.log(`${client.user.tag} Aktif!`);
   const durumlar = [
     'Sevgisizliğine bir kalp verdim..',
+    'Sinan Demir',
+    /*
     'Feleğin cilvesine, hayatın sillesine, dertlerin cümlesine itirazım var..',
     'Her şeyi al, bana beni geri ver..',
     'Kanma sever gibi göründüğüne, seni sevmiyorum diyecek bir gün..',
+    */
   ];
   let say = 0;
   setInterval(() => {
@@ -64,10 +67,12 @@ client.on('message', async msg => {
 // *****************************************  KOMUTLAR  ********************************************************** //
 // *************************************************************************************************************** //
 // Sunucuya katılan kişiye otomatik rol atama
+/*
 client.on('guildMemberAdd', member => {
   let rol = member.guild.roles.cache.find(role => role.name === 'Mal');
   member.roles.add(rol);
 });
+*/
 // *************************************************************************************************************** //
 // Sunucuya katılan ve ayrılanlar için karşılama mesajları
 client.on('guildMemberAdd', member => {
@@ -85,6 +90,7 @@ client.on('guildMemberRemove', member => {
 });
 // *************************************************************************************************************** //
 // ÜYE GELDİKÇE VE GİTTİKÇE KANAL ADINDA ÜYE SAYISINI GÖSTERMEK
+/*
 client.on('guildMemberAdd', member => {
   try {
     const sayac = member.guild.channels.cache.find(
@@ -105,6 +111,7 @@ client.on('guildMemberRemove', member => {
     console.log(e);
   }
 });
+*/
 // *************************************************************************************************************** //
 // msg.delete() mesajı siler.
 // msg.react() ile mesaja emoji ekler.

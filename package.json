@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "author": "Sinan Demir",
   "license": "ISC",
@@ -16,6 +16,6 @@
     "ffmpeg-static": "^4.4.0",
     "fs": "0.0.1-security",
     "path": "^0.12.7",
-    "ytdl-core": "^4.9.0"
+    "ytdl-core": "^4.10.0"
   }
 }

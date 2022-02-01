@@ -10,7 +10,7 @@ module.exports = {
     if (!dmKisi) return msg.reply("**DM'nin kime yapılacağını yazmalısın.**");
     if (!dmMesajı) return msg.reply("**DM'nin ne olacağını yazmalısın.**");
 
-    msg.reply(`${dmKisi} kişisine "${dmMesajı}" duyurusu yapıldı.`);
+    msg.reply(`${dmKisi} kişisine "${dmMesajı}" mesajı atıldı.`);
     dmKisi.send(dmMesajı);
   },
 };
